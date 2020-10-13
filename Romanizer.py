@@ -1,4 +1,6 @@
 """
+Python 3
+
 Nolan Aubuchon
 October 9, 2020
 
@@ -175,7 +177,15 @@ arabic = {'ا':'a',
 'ي':'y',
 'ی':'ye',
 '،':',',
-' ':' '}
+'ں':'̃',
+'ہ':'h',
+'ڈ':'ɖ',
+'ے':'e',
+'ھ':'h',
+'ٹ':'ʈ',
+'ؤ':'`',
+'ڑ':'ɽ',
+'ئ':'`'}
 
 georgian = {'ა':'a',
 'ბ':'b',
@@ -209,28 +219,31 @@ georgian = {'ა':'a',
 'ჭ':'č\'',
 'ხ':'x',
 'ჯ':'dž',
-'ჰ':'h',
-' ':' '}
+'ჰ':'h'}
 
 
 def romanize(text, target):
-	if(text == ""):
-		return ""
-	elif(re.match(r'\W',text[0],re.UNICODE) is not None):
-		return text[0] + romanize(text[1:],target)
-	elif(len(text) == 1 and target == "cyrillic"):
-		return cyrillic[text]
-	elif(len(text) == 1 and target == "greek"):
-		return greek[text]
-	elif(len(text) == 1 and target == "arabic"):
-		return arabic[text]
-	elif(len(text) == 1 and target == "georgian"):
-		return georgian[text]
-	elif(target == "cyrillic"):
-		return cyrillic[text[0]] + romanize(text[1:],target)
-	elif(target == "greek"):
-		return greek[text[0]] + romanize(text[1:],target)
-	elif(target == "arabic"):
-		return arabic[text[0]] + romanize(text[1:],target)
-	elif(target == "georgian"):
-		return georgian[text[0]] + romanize(text[1:],target)
+	try:
+		if(text == ""):
+			return ""
+		elif(re.match(r'\W',text[0],re.UNICODE) is not None):
+			return text[0] + romanize(text[1:],target)
+		elif(len(text) == 1 and target == "cyrillic"):
+			return cyrillic[text]
+		elif(len(text) == 1 and target == "greek"):
+			return greek[text]
+		elif(len(text) == 1 and target == "arabic"):
+			return arabic[text]
+		elif(len(text) == 1 and target == "georgian"):
+			return georgian[text]
+		elif(target == "cyrillic"):
+			return cyrillic[text[0]] + romanize(text[1:],target)
+		elif(target == "greek"):
+			return greek[text[0]] + romanize(text[1:],target)
+		elif(target == "arabic"):
+			return arabic[text[0]] + romanize(text[1:],target)
+		elif(target == "georgian"):
+			return georgian[text[0]] + romanize(text[1:],target)
+	except KeyError as e:
+		print(e)
+		return "[KEY ERROR]"
